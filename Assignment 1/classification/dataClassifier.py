@@ -20,7 +20,6 @@ import samples
 import sys
 import util
 import numpy as np
-import matplotlib as plt
 
 sys.setrecursionlimit(3000)
 
@@ -47,57 +46,68 @@ def enhancedFeatureExtractorDigit(datum):
     for this datum (a unit of data)
 
     ## DESCRIBE YOUR ENHANCED FEATURES HERE...
-
+    I calculated two values:
+    mx = maximum distance of a black pixel from the centre of the image
+    mn = minimum distance of a white pixel from the centre of the image
+    mx, mn describe approximately the dimention of the image
+    I have used three enhanced features:
+    1) Ratio of area of figure and mx^2:
+        Area is calculated as the number of black pixels
+    2) Ratio of perimeter of figure and mx
+        The image boundary is determined by addition of square of derivative of the image
+    3) Ratio of mn and mx
+        The ratio is approximately 1 for circle, and very less for star
+        The order will be circle > square > triangle > star
     ##
     """
 
-    def getPixelVal(x, y):
-        """
-        Helper Function to return the pixel value at location x, y
-        1 : black
-        0 : white
-        Refer to the basicFeatureExtractorDigit function for more Details
-        """
-        return datum[x * DATUM_HEIGHT + y]
-
     features = util.Counter()
     datum = np.asarray(datum)
-    # print(datum)
-    
-
-    features[0] = sum(datum >= 0.5)
     im = datum.reshape(50,50)
-    # f = open("test.txt", "w")
-    # for col in im:
-    #     for x in col:
-    #         f.write(str(int(x))+ " ")
-    #     f.write("\n")
-    d = (np.delete((np.delete(im, 49, 0) - np.delete(im, 0, 0))**2, 49 ,1) + np.delete((np.delete(im, 49, 1) - np.delete(im, 0, 1))**2, 49 ,0))
-    features[1] = sum(d.flatten() >= 1 )
-    features[2] = 1.0*features[0]/features[1]
+    mn = 50.0 #maximum distance of a black pixel from the centre of the image
+    mx = -1.0 #minimum distance of a white pixel from the centre of the image
+    for i in range(50):
+        for j in range(50):
+            if(im[i,j]==0):
+                d= ((i-24.5)**2+(j-24.5)**2)**0.5
+                mn = min(mn, d)
+            if(im[i,j]==1):
+                d= ((i-24.5)**2+(j-24.5)**2)**0.5
+                mx = max(mx, d)
 
-    features[3]=0
-    window=4
-    for i in range(window, 50-window):
-        for j in range(window, 50-window):
-            x = im[i-1,j] + im[i+1,j]+ im[i,j-1]+ im[i,j+1]
-            if(im[i,j]==1 and x<=2):
-                im1= im[i-window:i+window+1, j-window:j+window+1]
-                if(1.0*sum(im1.flatten() > 0.5 )/((2*window+1)**2) < 0.25):
-                    features[3]=features[3]+1
-    # print(features)
-    # im = datum.reshape(50,50)
-    # a = [15, 20, 25, 30, 35]
-    # b = []
-    # for i in range(len(a)):
-    #     s=0
-    #     for j in range(50):
-    #         s = s + (im[a[i]][j]<=0.5)
-    #     b.append(s)
-    # features[0]=b[0]-b[2]
-    # features[1]=b[1]-b[2]
-    # features[2]=b[3]-b[2]
-    # features[3]=b[4]-b[2]
+    features[0] = sum(datum >= 0.5)/mx**2 #This feature is the number of 
+    
+    d = (np.delete((np.delete(im, 49, 0) - np.delete(im, 0, 0))**2, 49 ,1) + np.delete((np.delete(im, 49, 1) - np.delete(im, 0, 1))**2, 49 ,0))
+    features[1] = sum(d.flatten() >= 1 )/mx
+    features[2]=mn/mx
+
+    ## Tried corner detection (by calculating ratio of black pixels on corner) with no good result
+    # features[3]=0
+    # window=4
+    # for i in range(window, 50-window):
+    #     for j in range(window, 50-window):
+    #         x = im[i-1,j] + im[i+1,j]+ im[i,j-1]+ im[i,j+1]
+    #         if(im[i,j]==1 and x<=2):
+    #             im1= im[i-window:i+window+1, j-window:j+window+1]
+    #             if(1.0*sum(im1.flatten() > 0.5 )/((2*window+1)**2) < 0.25):
+    #                 features[3]=features[3]+1
+
+    ## Tried Moravec corner detection with no good result
+    # window=2
+    # th=35
+    # for i in range(window+1, 50-window-1):
+    #     for j in range(window+1, 50-window-1):
+    #         s=0
+    #         im1= im[i-window:i+window+1, j-window:j+window+1]
+    #         l = [(1,1), (1,0), (1,-1), (0,1), (0,-1), (-1,1), (-1,0),(-1,-1)]
+    #         for (i1, j1) in l:
+    #             im2= im[i-window+i1:i+window+1+i1, j-window+j1:j+window+1+j1]
+    #             s+=np.sum((im2-im1)**2)
+    #         # print(s)
+    #         if(s>=th):
+    #             features[3]+=1
+    # print(features[3])
+
     return features
 
 def default(str):
