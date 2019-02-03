@@ -79,7 +79,16 @@ class Perceptron1v1Classifier:
 					
 
 				# "*** YOUR CODE HERE ***"
-				util.raiseNotDefined()
+				y = trainingLabels[i]
+				for y1 in self.legalLabels:
+					if (y1 < y):
+						c = self.weights[frozenset([y1, y])]*trainingData[i]
+						if (c <= 0):
+							self.weights[frozenset([y1, y])] += trainingData[i]
+					elif (y1>y):
+						c = self.weights[frozenset([y1, y])]*trainingData[i]
+						if (c > 0):
+							self.weights[frozenset([y, y1])] -= trainingData[i]
 				
 		## Do not edit code below
 

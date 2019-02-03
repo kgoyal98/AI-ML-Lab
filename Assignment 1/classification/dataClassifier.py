@@ -19,6 +19,8 @@ import perceptron1v1
 import samples
 import sys
 import util
+import numpy as np
+import matplotlib as plt
 
 sys.setrecursionlimit(3000)
 
@@ -59,10 +61,43 @@ def enhancedFeatureExtractorDigit(datum):
         return datum[x * DATUM_HEIGHT + y]
 
     features = util.Counter()
+    datum = np.asarray(datum)
+    # print(datum)
+    
 
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    features[0] = sum(datum >= 0.5)
+    im = datum.reshape(50,50)
+    # f = open("test.txt", "w")
+    # for col in im:
+    #     for x in col:
+    #         f.write(str(int(x))+ " ")
+    #     f.write("\n")
+    d = (np.delete((np.delete(im, 49, 0) - np.delete(im, 0, 0))**2, 49 ,1) + np.delete((np.delete(im, 49, 1) - np.delete(im, 0, 1))**2, 49 ,0))
+    features[1] = sum(d.flatten() >= 1 )
+    features[2] = 1.0*features[0]/features[1]
 
+    features[3]=0
+    window=4
+    for i in range(window, 50-window):
+        for j in range(window, 50-window):
+            x = im[i-1,j] + im[i+1,j]+ im[i,j-1]+ im[i,j+1]
+            if(im[i,j]==1 and x<=2):
+                im1= im[i-window:i+window+1, j-window:j+window+1]
+                if(1.0*sum(im1.flatten() > 0.5 )/((2*window+1)**2) < 0.25):
+                    features[3]=features[3]+1
+    # print(features)
+    # im = datum.reshape(50,50)
+    # a = [15, 20, 25, 30, 35]
+    # b = []
+    # for i in range(len(a)):
+    #     s=0
+    #     for j in range(50):
+    #         s = s + (im[a[i]][j]<=0.5)
+    #     b.append(s)
+    # features[0]=b[0]-b[2]
+    # features[1]=b[1]-b[2]
+    # features[2]=b[3]-b[2]
+    # features[3]=b[4]-b[2]
     return features
 
 def default(str):

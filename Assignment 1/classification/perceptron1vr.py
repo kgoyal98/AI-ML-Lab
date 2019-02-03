@@ -71,6 +71,7 @@ class Perceptron1vrClassifier:
 
 				cl = self.classify([trainingData[i]])[0];
 				if(trainingLabels[i] != cl):
+					# print(len(self.weights[trainingLabels[i]].values())	, len(trainingData[i].values()))
 					self.weights[trainingLabels[i]] += trainingData[i];
 					self.weights[cl] -= trainingData[i];
 				
