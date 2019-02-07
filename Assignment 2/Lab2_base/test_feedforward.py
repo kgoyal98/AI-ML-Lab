@@ -144,7 +144,7 @@ def test_case_3():
 			else:
 				print("Values Don't Match")
 				correct = False
-				break
+				# break
 
 	if correct:
 		print("Test Case 3 Passed")
@@ -156,6 +156,6 @@ def test_case_3():
 if __name__ == "__main__":
 	np.random.seed(42)
 	
-	test_case_1()
-	test_case_2()
+	# test_case_1()
+	# test_case_2()
 	test_case_3()

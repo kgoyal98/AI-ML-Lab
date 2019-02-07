@@ -30,7 +30,7 @@ class FullyConnectedLayer:
 
 		###############################################
 		# TASK 1 - YOUR CODE HERE
-		raise NotImplementedError
+		return sigmoid(np.matmul(X, self.weights)+self.biases)
 		###############################################
 		
 	def backwardpass(self, lr, activation_prev, delta):
@@ -85,7 +85,28 @@ class ConvolutionLayer:
 
 		###############################################
 		# TASK 1 - YOUR CODE HERE
-		raise NotImplementedError
+		X1=[]
+		for i in range(n):
+			x = X[i,:,:,:]
+			F=[]
+			for f in range(self.out_depth):
+				y=[]
+				w = self.weights[f,:,:,:]
+				for j in range(self.out_row):
+					for k in range(self.out_col):
+						# print(i,j)
+						y.append(np.sum(x[:,j*self.stride:j*self.stride+self.filter_row, k*self.stride:k*self.stride+self.filter_col]*w) + self.biases[f])
+				y = np.asarray(y)
+				# print(y.shape)
+				y = np.reshape(y, [self.out_row,self.out_col])
+				F.append(y)
+			F = np.asarray(F)
+			X1.append(F)
+		X1 = np.asarray(X1)
+		print(X1.shape)
+		return X1
+
+
 		###############################################
 
 	def backwardpass(self, lr, activation_prev, delta):
@@ -134,7 +155,23 @@ class AvgPoolingLayer:
 
 		###############################################
 		# TASK 1 - YOUR CODE HERE
-		raise NotImplementedError
+		X1=[]
+		for i in range(n):
+			x = X[i,:,:,:]
+			D=[]
+			for d in range(self.out_depth):
+				y=[]
+				for j in range(self.out_row):
+					for k in range(self.out_col):
+						# print(i,j)
+						y.append(np.sum(x[d,j*self.stride:j*self.stride+self.filter_row, k*self.stride:k*self.stride+self.filter_col])/(self.filter_row*self.filter_col))
+				y = np.asarray(y)
+				y = np.reshape(y, [self.out_row,self.out_col])
+				D.append(y)
+			D = np.asarray(D)
+			X1.append(D)
+		X1 = np.asarray(X1)
+		return X1
 		###############################################
 
 
