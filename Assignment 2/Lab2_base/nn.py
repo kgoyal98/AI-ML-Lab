@@ -81,6 +81,7 @@ class NeuralNetwork:
 				trainLoss += loss
 				
 				# Estimate the one-hot encoded predicted labels after the feedword pass
+				# print(activations[-1].shape, self.out_nodes)
 				predLabels = oneHotEncodeY(np.argmax(activations[-1], axis=1), self.out_nodes)
 
 				# Calculate the training accuracy for the current batch
@@ -158,4 +159,5 @@ class NeuralNetwork:
 		
 		delta = activations[-1] - Y
 		for i in range(len(self.layers)-1, -1, -1):
+			# print("delta", delta.shape)
 			delta = self.layers[i].backwardpass(self.alpha, activations[i], delta)
