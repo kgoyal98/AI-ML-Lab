@@ -90,22 +90,16 @@ class ConvolutionLayer:
 		# OUTPUT activation matrix		:[n X self.out_depth X self.out_row X self.out_col]
 
 		###############################################
-		X1=[]
+		X1=np.zeros([n, self.out_depth, self.out_row, self.out_col])
 		for i in range(n):
 			x = X[i,:,:,:]
-			F=[]
 			for f in range(self.out_depth):
-				y=[]
 				w = self.weights[f,:,:,:]
+				bias = self.biases[f]
 				for j in range(self.out_row):
 					for k in range(self.out_col):
-						y.append(sigmoid(np.sum(x[:,j*self.stride:j*self.stride+self.filter_row, k*self.stride:k*self.stride+self.filter_col]*w) + self.biases[f]))
-				y = np.asarray(y)
-				y = np.reshape(y, [self.out_row,self.out_col])
-				F.append(y)
-			F = np.asarray(F)
-			X1.append(F)
-		X1 = np.asarray(X1)
+						X1[i,f,j,k] = (sigmoid(np.sum(x[:,j*self.stride:j*self.stride+self.filter_row, \
+							k*self.stride:k*self.stride+self.filter_col]*w) + bias))
 		self.data = X1
 		return X1
 
@@ -130,13 +124,15 @@ class ConvolutionLayer:
 		delta1  = deriv(self.data)*delta
 		# print(delta1.shape)
 		for i in range(n):
+			a =activation_prev[i,:,:,:]
 			for f in range(self.out_depth):
+				w = self.weights[f,:,:,:]
 				for l in range(self.out_row):	
 					for m in range(self.out_col):
-						# print(dweight[f,:,:,:].shape, activation_prev[i,:,self.stride*l:self.stride*l+self.filter_row, self.stride*m:self.stride*m+self.filter_col].shape)
-						dweight[f,:,:,:] += activation_prev[i,:,self.stride*l:self.stride*l+self.filter_row, self.stride*m:self.stride*m+self.filter_col]*delta1[i,f,l,m]
-						self.biases[f]-= lr*delta1[i,f,l,m]
-						x[i,:,self.stride*l:self.stride*l+self.filter_row, self.stride*m:self.stride*m+self.filter_col] += self.weights[f,:,:,:]*delta1[i,f,l,m]
+						d = delta1[i,f,l,m]
+						dweight[f,:,:,:] += a[:,self.stride*l:self.stride*l+self.filter_row, self.stride*m:self.stride*m+self.filter_col]*d
+						self.biases[f]-= lr*d
+						x[i,:,self.stride*l:self.stride*l+self.filter_row, self.stride*m:self.stride*m+self.filter_col] += w*d
 		
 		self.weights -= lr*dweight
 		return x
@@ -172,22 +168,15 @@ class AvgPoolingLayer:
 
 		###############################################
 		# TASK 1 - YOUR CODE HERE
-		X1=[]
+		X1=np.zeros([n, self.out_depth, self.out_row, self.out_col])
 		for i in range(n):
 			x = X[i,:,:,:]
-			D=[]
 			for d in range(self.out_depth):
-				y=[]
 				for j in range(self.out_row):
 					for k in range(self.out_col):
-						y.append(np.sum(x[d,j*self.stride:j*self.stride+self.filter_row, k*self.stride:k*self.stride+self.filter_col])/(self.filter_row*self.filter_col))
-				y = np.asarray(y)
-				y = np.reshape(y, [self.out_row,self.out_col])
-				D.append(y)
-			D = np.asarray(D)
-			X1.append(D)
-		X1 = np.asarray(X1)
-		self.data=X1
+						X1[i,d,j,k] = np.sum(x[d,j*self.stride:j*self.stride+self.filter_row, \
+							k*self.stride:k*self.stride+self.filter_col])/(self.filter_row*self.filter_col)
+		self.data = X1
 		return X1
 		###############################################
 
@@ -204,9 +193,7 @@ class AvgPoolingLayer:
 		n = activation_prev.shape[0] # batch size
 
 		###############################################
-		# TASK 2 - YOUR CODE HERE
-		# delta1  = deriv(self.data)*delta
-		# print("sdf", delta.shape)
+		# TASK 2 - YOUR CODE Here
 		x = np.zeros([n, self.in_depth, self.in_row, self.in_col])
 		for i in range(n):
 			for f in range(self.out_depth):

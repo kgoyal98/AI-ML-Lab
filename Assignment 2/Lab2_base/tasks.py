@@ -23,10 +23,9 @@ def taskSquare(draw):
 	# Eg. nn1.addLayer(FullyConnectedLayer(x,y))
 	###############################################
 	# TASK 2.1 - YOUR CODE HERE
-	nn1 = nn.NeuralNetwork(2, 0.075, 100, 100)
-	nn1.addLayer(FullyConnectedLayer(2, 10))
-	# nn1.addLayer(FullyConnectedLayer(2, 2))
-	nn1.addLayer(FullyConnectedLayer(10, 2))
+	nn1 = nn.NeuralNetwork(2, 0.1, 50, 40)
+	nn1.addLayer(FullyConnectedLayer(2,8))
+	nn1.addLayer(FullyConnectedLayer(8,2))
 	###############################################
 	nn1.train(XTrain, YTrain, XVal, YVal, False, True)
 	pred, acc = nn1.validate(XTest, YTest)
@@ -68,10 +67,10 @@ def taskMnist():
 	# Eg. nn1.addLayer(FullyConnectedLayer(x,y))
 	###############################################
 	# TASK 2.3 - YOUR CODE HERE
-	nn1 = nn.NeuralNetwork(10, 0.1, 20, 100)
-	nn1.addLayer(FullyConnectedLayer(784, 10))
-	# nn1.addLayer(FullyConnectedLayer(5, 5))
-	nn1.addLayer(FullyConnectedLayer(10, 10))	
+	nn1 = nn.NeuralNetwork(10, 0.1, 20, 40)
+	nn1.addLayer(FullyConnectedLayer(784, 50))
+	nn1.addLayer(FullyConnectedLayer(50, 12))
+	nn1.addLayer(FullyConnectedLayer(12, 10))	
 	###############################################
 	nn1.train(XTrain, YTrain, XVal, YVal, False, True)
 	pred, acc  = nn1.validate(XTest, YTest)
@@ -95,20 +94,42 @@ def taskCifar10():
 	# # Eg. nn1.addLayer(FullyConnectedLayer(x,y))
 	# ###############################################
 	# # TASK 2.4 - YOUR CODE HERE
-	nn1 = nn.NeuralNetwork(10, 0.1, 50, 100)
-	# nn1.addLayer(AvgPoolingLayer([3, 32, 32], [4,4], 4))
-	# nn1.addLayer(ConvolutionLayer([3,8,8], [4,4], 4, 1))
-	# nn1.addLayer(AvgPoolingLayer([4, 5, 5], [3,3], 1))
+	nn1 = nn.NeuralNetwork(10, 0.1, 20, 30)
+	# nn1.addLayer(ConvolutionLayer([3,32,32], [6,6], 4, 2))
+	# nn1.addLayer(AvgPoolingLayer([4, 14, 14], [2,2], 2))
+	# nn1.addLayer(ConvolutionLayer([4,7,7], [3,3], 2, 2))
 	# nn1.addLayer(FlattenLayer())
-	# nn1.addLayer(FullyConnectedLayer(36, 10))
+	# nn1.addLayer(FullyConnectedLayer(18, 10))
+	# 35.0
 
-	nn1.addLayer(ConvolutionLayer([3,32,32], [10,10], 32, 2))
-	nn1.addLayer(AvgPoolingLayer([32,12,12], [4,4], 4))
+	#model1
+	# nn1.addLayer(ConvolutionLayer([3,32,32], [16,16], 10, 8))
+	# nn1.addLayer(FlattenLayer())
+	# nn1.addLayer(FullyConnectedLayer(90, 20))
+	# nn1.addLayer(FullyConnectedLayer(20, 10))
+	#37.6 seed=735 epoch=30
+
+	#model2
+	nn1.addLayer(ConvolutionLayer([3,32,32], [16,16], 10, 8))
 	nn1.addLayer(FlattenLayer())
-	# nn1.addLayer(FullyConnectedLayer(288,100))
-	nn1.addLayer(FullyConnectedLayer(288,10))
+	nn1.addLayer(FullyConnectedLayer(90, 10))
+	#37.9 seed=735 epoch=30
+
+	#model3
+	# nn1.addLayer(ConvolutionLayer([3,32,32], [16,16], 5, 8))
+	# nn1.addLayer(FlattenLayer())
+	# nn1.addLayer(FullyConnectedLayer(45, 10))
+	# nn1.addLayer(FullyConnectedLayer(20, 10))
+	#34.5 seed=231 epoch=60
+
+	#model4
+	# nn1.addLayer(ConvolutionLayer([3,32,32], [16,16], 6, 8))
+	# nn1.addLayer(FlattenLayer())
+	# nn1.addLayer(FullyConnectedLayer(54, 10))
+	#36% seed=735 epoch=40
+
 	###################################################
-	# return nn1,  XTest, YTest, modelName # UNCOMMENT THIS LINE WHILE SUBMISSION
+	return nn1,  XTest, YTest, modelName # UNCOMMENT THIS LINE WHILE SUBMISSION
 
 
 	nn1.train(XTrain, YTrain, XVal, YVal, True, True, loadModel=False, saveModel=True, modelName=modelName)

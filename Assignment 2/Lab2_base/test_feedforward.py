@@ -23,8 +23,8 @@ def test_case_1():
 	trueActivations = cPickle.load(f)
 	f.close()
 
-	print("Your output :", studActivations)
-	print("Expected output : ", trueActivations)
+	# print("Your output :", studActivations)
+	# print("Expected output : ", trueActivations)
 
 	correct = True
 
