@@ -7,7 +7,6 @@ Roll number:	160050026
      TASK 2
 ================
 
-
 1. Run your code on datasets/garden.csv, with different values of k. Looking at the performance plots, does the SSE of k-means algorithm ever increase as the iterations are made? (1 mark)
 Answer:
 	The SSE of k-means algorithm always decreases as the iterations are made. The reason is that each iteration can be decomposed in two steps and each of the two steps is guaranteed to be non increasing. First step is to update the clusters of the points based upon their minimum distance to the centroids. In this step, the SSE do not increase because the distance of that point to the cluster centre decreases and hence the SSE decreases. In the second step, we update the cluster means to be means of the points in the cluster. In this step too, the SSE decreases because for each cluster, sum squared error is minimum for the the cluster center equal to the mean.
@@ -17,7 +16,7 @@ Answer:
 	3lines.png:
 	The clustering drawn by hand clusters all three lines in three clusters such that each line corresponds to one cluster. But the clustering by k-means algorithm, clusters in such a way that each line has some part in each cluster. The k-means algorithm is clustering horizontally while by hand, we cluster vertically. This is happening because the length of each line is around 12 units but the distance between two lines is 2 units. So, while clustering, suppose that one cluster center is in first line. Then, another point in that line can be 0-12 units but a point in the nearby line can be just 2 units. So while clustering, points in the nearby line will be grouped in that cluster rather than points in the same line.
 	mouse.png:
-	The clustering drawn by hand clusters the face, and two ears separately. But the clustering by k-means clusters many points from face in the ear clusters too. This is happenning because the k-means algorithm considers all the clusters of the same size, but the ears are smaller than face. So, some points in the face are closer to the ear center rather than the face center.
+	The clustering drawn by hand clusters the face, and two ears separately. But the clustering by k-means clusters many points from face in the ear clusters too. This is happenning because the k-means algorithm considers all the clusters of the same size, but the ears are smaller than face in size. So, some points in the face are closer to the ear center rather than the face center.
 
 
 ================
@@ -34,7 +33,10 @@ Dataset     |  Initialization | Average SSE    | Average Iterations
   1000.csv  |        forgy    | 21337462.296   | 3.28
   1000.csv  |        kmeans++ | 19887301.0042  | 3.16
  10000.csv  |        forgy    | 168842238.612  | 21.1
- 10000.csv  |        kmeans++ | 22323178.8625  | 7.5
+ 10000.csv  |        kmeans++ |  22323178.8625 | 7.5
+
+Average number of iterations are less for kmeans++ initialisation. It is because kmeans++ ensures far apart cluster centers. Nearby centres in forgy causes the points around them to oscillate among those nearby clusters, causing more number of iterations to converge.
+Also average SSE is better for kmeans++ as compared to forgy because there is lesser chance in kmeans++ that nearby cluster centres are chosen. This ensures that nearly cluster of points have one initialisation center with more probability.
 
 
 ================
@@ -43,7 +45,9 @@ Dataset     |  Initialization | Average SSE    | Average Iterations
 
 1. Can you observe from the visualization that k-medians algorithm is more robust to outliers as compared to k-means? Why do you think this happens? (1.5 marks)
 Answer:
-	K-medians algorithm is more robust to outliers as compared to k-means as observed from the visualization. This happens because in the kmeans algorithm, once an outlier comes in an cluster, it moves the mean significantly towards itself, thus making the other cluster means closer to the non-outlier points to it. This ends up in just one outlier in one of the cluster, wasting a few more clusterings. Whereas in the k-medians algorithm, the outliers do not much affect the cluster centroid which is the median of the points. Thus, a cluster is not wasted in this algorithm.
+	K-medians algorithm is more robust to outliers as compared to k-means as observed from the visualization. This happens because in the kmeans algorithm, once an outlier comes in an cluster, the mean is shifted significantly towards the outlier, thus making the other cluster means closer to the non-outlier points in that cluster. This ends up in just one outlier in one of the cluster, thus wasting one cluster. Whereas in the k-medians algorithm, the outliers do not affect the cluster centroid significantly which is the median of the points because median is the value separating the higher half from the lower half of a data sample. Thus, a cluster is not wasted in this algorithm.
+
+
 ================
   TASK 8
 ================
@@ -54,4 +58,5 @@ Answer:
 
 2. You can observe that for the small number of clusters, the degree of compression (original size/compressed size) is about the same as that of when we use larger number of clusters even though we need to store lesser number of colors. Can you tell why? How can we increase this ratio in case of smaller number of clusters? [1 mark]
 Answer: 
-	The degree of compression is about the same with different number of clusters because we are using one byte for every pixel in the image regardless of the number of clusters. But we can see the size of image_centroids.csv considerably reducing on reducing k. We can increase the ratio by using less number of bits per pixel. For eg, for 32 clusters, we need only 5 bits for representing a pixel rather than 8 bits which we are using now. So if we include in the header, the number of bits given to each pixel, we can increase the degree of compression.
+	The degree of compression is about the same with different number of clusters because we are using one byte for every pixel in the image regardless of the number of clusters. But we can observe that the size of image_centroids.csv reduces on reducing k.
+	We can increase the ratio by using less number of bits per pixel. For eg, for 32 clusters, we need only 5 bits for representing a pixel rather than 8 bits which we are using now. So if we include in the header, the number of bits required for each pixel and use only that number of bits to represent a pixel, we can increase the degree of compression.

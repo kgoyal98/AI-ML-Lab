@@ -146,7 +146,7 @@ def write_image(filename, img):
 		for i in range(height):
 			for j in range(width):
 				# print(i,j, type(img[i][j]))
-				file.write(chr(img[i][j]))
+				file.write(chr(int(img[i][j])))
 	
 
 
@@ -175,12 +175,12 @@ def decompress_image(cluster_labels, cluster_centroids):
 		img = [[0 for _ in range(width)] for _ in range(height)]
 		for i in range(height):
 			for j in range(width):
-				img[i][j] = list(cluster_centroids[cluster_labels[i][j]])
+				img[i][j] = [int(x) for x in list(cluster_centroids[cluster_labels[i][j]])]
 	else:
 		img = [[0 for _ in range(width)] for _ in range(height)]
 		for i in range(height):
 			for j in range(width):
-				img[i][j] = cluster_centroids[cluster_labels[i][j]]
+				img[i][j] = int(cluster_centroids[cluster_labels[i][j]])
 
 	return img
 

@@ -193,7 +193,7 @@ def initialization_kmeansplusplus(data, distance, k):
 				continue
 
 			min = 'inf'	# else find the minimum distance from a cluster centroid
-			for j in range(len(centroids)):
+			for j in range(len(centroids)): # loop for finding the minimum distance from a cluster centroid
 				d = distance(data[i], centroids[j])
 				if (d <= min):
 					min = d
