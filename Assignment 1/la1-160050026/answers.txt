@@ -1,0 +1,25 @@
+Task 2:
+	1.	The plot of accuracy vs number of data points seen increases drastically upto 2000 data points and then begins to saturate. The training accuracy is about 5% greater than the test accuracy on saturation. On increasing the number of iterations, the acccuracy does not increase. So 2 iterations are enugh for this data. On changing the classifier from 1vr to 1v1, there is no change in accuracy.
+	
+	2.	The plot of training accuracy vs training set size decreases as the training set size increases while the test accuracy increases as the training set size increases. The training accuracy graph always remains above the test accuracy graph. Changing the number of iteration has not much effect on the graph except it makes the graph of test accuracy smoother. On changing the 
+		1.	If the classifier makes assumption on no training data, then the weight vectors will remain to its initial value. So, the classifier will choose that class for which the dot product of the weight with the data is maximum. Since the classifier can choose any one of the classes with no bias towards any one, the expected accuracy of such a classifier would be 10%.
+		
+Task 3:
+	3.1	python dataClassifier.py -c 1vr -t 800 -s 8000
+		71.3%
+		
+		python dataClassifier.py -c 1v1 -t 800 -s 8000
+		71.5%
+		
+		The accuracy for 1v1 classifier is slightly more than that of 1vr classifier.
+		
+		python dataClassifier.py -c 1vr -t 80000 -s 20000
+		73.8%
+		
+		python dataClassifier.py -c 1v1 -t 80000 -s 20000
+		78.8%
+		
+		The accuracy of 1v1 classifier is 5% more than that of 1vr classifier.
+		
+		The 1v1 classifier has much more weights to be trained. That is why it has a better efficiency than 1vr. For training set of size 800, the accuracy of 1v1 is only slightly better because the number of training points less to traing so many weights. If the data points are more e.g. 8000, the 1v1 classifier does much better than 1vr classifier.
+	

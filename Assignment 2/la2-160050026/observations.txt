@@ -1,0 +1,59 @@
+
+2.1
+
+Architecture:
+	No. of hidden layers:		1
+	Nodes in hidden layer 1:	5
+
+Learning Rate : 0.1
+Batch Size : 50
+Epochs : 20
+Test Accuracy : 98.0% 
+Random Seed : 64
+
+Since the data is not linearly separable, at least one hidden layer is necessary. On trying for different values of number of nodes, 5 comes out to be the minimum. 4 nodes is also passing for most but not all seeds.
+
+2.2
+
+Architecture:
+	No. of hidden layers:		1
+	Nodes in hidden layer 1:	2
+
+Learning Rate : 0.1
+Batch Size : 50
+Epochs : 40
+Test Accuracy : 98.5% 
+Random Seed : 64
+
+2.3
+
+Architecture:
+	No. of hidden layers:		1
+	Nodes in hidden layer 1:	9
+
+Learning Rate : 0.1
+Batch Size : 20
+Epochs : 50
+Test Accuracy : 98.5% 
+Random Seed : 64
+
+2.4
+
+Architecture:
+	No. of hidden layers:		2
+	layer 1: Convolution layer
+		weight matrix dimentions:	16*16*3
+		number of filters:		6
+		stride:				8
+	layer 2: flatten layer
+	layer 3: fully connected 54*10
+
+	nn1.addLayer(ConvolutionLayer([3,32,32], [16,16], 6, 8))
+	nn1.addLayer(FlattenLayer())
+	nn1.addLayer(FullyConnectedLayer(54, 10))
+
+Learning Rate : 0.1
+Batch Size : 20
+Epochs : 20
+Test Accuracy : 36% 
+Random Seed : 735

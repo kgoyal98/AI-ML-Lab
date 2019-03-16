@@ -1,0 +1,3 @@
+python tutorials to refer to various functions of numpy
+https://uclanlp.github.io/CS269-17/slides/CS269-03.pdf to understand 1v1 classification
+CS663 slides to recall corner detection algorithms
