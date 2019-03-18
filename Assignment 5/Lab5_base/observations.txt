@@ -1,0 +1,25 @@
+Ridge regression:
+	hyperparameters: max_iter=30000, lr=0.00001, epsilon = 1e-4
+	lambda = 13
+	sse = 540146995274.58875
+
+Lasso regression:
+	hyperparameters: max_iter=1000
+	lambda = 350000
+	sse = 533781044603.53326
+
+The graph of SSE vs lambda for ridge and lasso regression first decreases, then achieves a minimum value and then increases. 
+Reason: For low values of lambda, the test SSE is large because of overfitting (a problem in multivariate linear regression in high-dimensional spaces). It is possible that some dimension that is actually irrelevant appears by chance to be useful, resulting in overfitting. 
+For large values of lambda, the test SSE is large because the algorithm then minimises more the complexity term of the cost function resulting in low values of the complexity but compromising the empirical loss.
+So, there exists a point at which the SSE attains a minimum value.
+
+The plots helped to tune lambda. By analysing the plots, we can find the approximate location of the minima of the graph. So then, we can sample the SSE closer to the minima to get higher precision in calculation of the minima point. Through this method, we can fine tune the parameter lambda.
+
+Task 5:
+	Yes, there is something unusual with the solution of Lasso compared to the Ridge . In Lasso regression, the resultant weight vector has a lot of zero entries (207 with the above parameters) whereas in Ridge regression there is no such observation.
+Reason: Minimizing Loss(w) + λComplexity (w) is equivalent to minimizing Loss(w) subject to the constraint that Complexity (w) ≤ c, for some constant c that is related to λ. For lasso regression, the region Complexity (w) ≤ c, is diamond-shaped with corners along the axes while for ridge it is spherical with center at the origin. The concentric ovals represent contours of the loss function, with the minimum loss at the center. We want to find the point in the region Complexity (w) ≤ c that is closest to the minimum. For lasso regression, it will be common for the corner of the box to find its way closest to the minimum, just because the corners are pointy. Whereas for ridge regression, there is no reason for the intersection to appear on one of the axes; thus ridge does not tend to produce zero weights.
+
+Using lasso is advantageous compared to ridge. This is because lasso tends to produce a sparse model and hypotheses that discard attributes can be easier for a human to understand, and may be less likely to overfit. Also, it is also useful for feature extraction as the weights which are zero do not contribute much to the model.
+
+
+
