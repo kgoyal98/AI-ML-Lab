@@ -1,0 +1,3 @@
+http://norvig.com/sudoku.html
+Artificial Intelligence: A Modern Approach
+Making Sudoku commit Seppuku, http://www.cs.uml.edu/ecg/uploads/AIfall10/mccann_sudoku.pdf

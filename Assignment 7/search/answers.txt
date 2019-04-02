@@ -1,0 +1,19 @@
+Task 3:
+	Yes, we can implement informed search techniques for the problem but the methods would not at all efficient. We can define the path cost g(n) as the number of empty boxes that are filled in the original sudoku and the heuristic can be taken as the number of unfilled squares. Doing A-star search on this will result in a BFS like search and will take a lot of computation and time. In the sudoku problem we do not want to minimize the number of decisions since we just want any solution and also the number of total moves in every case same. That is why A-star search is not recommended. Also at any point while choosing a possibility, we do not have problem-specific knowledge beyond the definition of the problem itself and cannot favour one possibility over the other. That is why informed search methods will not give better results as compared to an uninformed strategy.
+	A suggested path cost and heuristic in a paper (given in references) is:
+	g(n) = #Possible_Numbers_In_All_Empty_Boxes(n.Parent) - #Possible_Numbers_In_All_Empty_Boxes(n)
+	h(n) = #Empty_Boxes(n)
+	
+Task 7:
+	Dijkstra algorithm chooses the node that node from the frontier which has the lowest cost from the start node. This algorithm is precisely same as that of the A-star algorithm with heuristic set to zero for all nodes. So, the number of nodes visited in case of the Dijkstra's algorithm is the same as that in Task 5.
+	
+	If the problem 	required us to reach multiple nodes then the heuristic that can be used is
+		h(n) = the minimum of the euclidian distances between the node n and the unvisited goal nodes if all goal nodes have not been visited.
+			 = 0 if all goal nodes have been visited
+	The heuristic is admissible since the the path has to pass through the minimum distance goal node and the euclidean distance will be less than that. The heuristice is consistent because:
+	Let {g1, g2,...} be the unvisited goal nodes at n and Action(n, a) = n'
+		By triangle inequality, distance(n, gi) <= distance(n', gi) + c(n, a, n') for all i
+		min_i distance(n, gi) <=  min_i distance(n', gi) + c(n, a, n')
+		h(n, gi) <= min_i distance(n', gi) + c(n, a, n') <= h(n', gi) + c(n, a, n') (unvisited goal nodes of n' are a subset of {g1, g2,...})
+	Hence, the heuristic is consistent.
+	

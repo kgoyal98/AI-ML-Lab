@@ -1,0 +1,6 @@
+path.png:
+	The agent moves with the correct move with a probability 0.2. That is why the agent is not able to reach the end in the shortest path. Rather it deviates from the path in the process of reaching the end.
+
+plot.png:
+	At p=0, the agent moves any valid move with equal probability. That is why, it is taking so many steps to complete the maze. As p increases, the agent is able to take the correct step with more probability and therefore the number of steps to complete the maze decrease. At p=1, stochastic maze is equivalent to the deterministic maze and the agent is able to take any action with 100% chance. That is why the number of steps to complete will be the minimum possible number of steps needed. Note that here, I analysed for the expected number of steps to reach the end of the maze. However, the experiment is done for single runs. This means the graph may not have the general trend that I discussed due to randomness.
+	
