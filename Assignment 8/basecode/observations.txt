@@ -1,0 +1,32 @@
+Kunal Goyal
+160050026
+
+Comparing the different intialisation methods:
+
+From the graphs, it can be seen that for random initialization, the initial tour length is very large for random initialisation (around 3500) as compared to nearest neighbor initialisation and Euclidean initialisation (around 820). The tour length of the final graph similar for random initialisation, nearest neighbor initialisation and Euclidean initialisation (around 700). But it can be seen that the number of hill climb iterations in nearest neighbor initialisation and Euclidean initialisation is much less (around 15) as compared to that of random initialisation (around 65).
+So nearest neighbor initialisation and Euclidean initialisation is better. This is because the random initialisation may take very long initial paths (the path may be such that it crosses multiple times between two far away groups of cities) so it is more probable that the path will stuck into local minima having high cost but in the nearest neighbor initialisation, the path is always such that the nearest cities are visited first and in Euclidean initialisation, the path is according to the minimum spanning tree. So, in these initialisations, the path length is much less as compared to random initilisation on an average.
+Between neighbour initialisation and Euclidean initialisation, Euclidean initialisation is better because in neighbour initialisation, for some starting cities, namely 3 and 4, the search abruptly stops at relatively high tour length. But for Euclidean initialisation, the search does not depend much upon the initial city and all the searches converge smoothly. Euclidean initialisation is guarenteed to achieve a solution which is no more than twice the optimal tour making it a better initialisation.
+
+===============================================================================================
+
+Task 6:
+Let 2optNeighbours neighbor generating method be method1 and 3optNeighbours+2optNeighbours neighbor generating method be method2.
+The number of hill climb iterations are around 40-50 for method2 but for method1 are around 65-70. Also the tour length of final tour is lesser for method2 as compared to method1 although the difference is not much. On the basis of the number of iterations and length of the final tour, we can say that method2 is better than method1. But the disadvantage to method2 is that is takes much more time as compared to method1.
+Method2 is better than method1 because the 2optNeighbours is a subset of 3optNeighbours+2optNeighbours. So, method2 has a greater search space as compared to method1 and it is less probable in method2 to get stuck in local minima having high cost. Also since method2 is visiting more number of neighbors than in method1, method2 will terminate in less number of iterations and to a lower cost as compared to method1.
+
+================================================================================================
+
+Task 7:
+Let 2optNeighbours neighbor generating method be method1 and 3optNeighbours+2optNeighbours neighbor generating method be method2.
+The number of hill climb iterations are around 10 but for method1 are around 14. Also the tour length of final tour is lesser for method2 as compared to method1 although the difference is not much. It can be observed that in method1, for some starting cities 3 and 4, the search stopped at 8-9 iterations whereas this did not happen in method2. This is because in method1, there was no 2-opt-neighbor with lower path cost which terminated the loop whereas in method2 there was 3-opt-neighbors with lower path cost. On the basis of above factors, we can say that method2 is better than method1. But the disadvantage to method2 is that is takes much more time as compared to method1.
+Method2 is better than method1 because the 2optNeighbours is a subset of 3optNeighbours+2optNeighbours. So, method2 has a greater search space as compared to method1 and it is less probable in method2 to get stuck in local minima having high cost. Also since method2 is visiting more number of neighbors than in method1, method2 will terminate in less number of iterations and to a lower cost as compared to method1.
+
+================================================================================================
+
+Task 8:
+Let 2optNeighbours neighbor generating method be method1 and 3optNeighbours+2optNeighbours neighbor generating method be method2.
+The number of hill climb iterations are 15 and 16 for method1. The tour length of final tour is lesser for method2 as compared to method1 although the difference is not much. On the basis of the number of iterations and length of the final tour, we can say that method2 is better than method1. But the disadvantage to method2 is that is takes much more time as compared to method1 and the results are very close.
+Method2 is better than method1 because the 2optNeighbours is a subset of 3optNeighbours+2optNeighbours. So, method2 has a greater search space as compared to method1 and it is less probable in method2 to get stuck in local minima having high cost. Also since method2 is visiting more number of neighbors than in method1, method2 will terminate in less number of iterations and to a lower cost as compared to method1.
+
+================================================================================================
+
